@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import LivroList from './components/LivroList';
 import UsuarioList from './components/UsuarioList';
 import './App.css';
-import { Link } from 'react-router-dom';
 
 function App() {
   return (
@@ -23,4 +22,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;
