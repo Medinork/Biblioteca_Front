@@ -3,7 +3,7 @@ Requisitos
 Node.js 14 ou superior
 npm 6 ou superior
 Passos para Instalação
-Clone o Repositório bash git clone <URL_DO_REPOSITORIO_FRONTEND> cd frontend
+Clone o Repositório bash git clone <https://github.com/Medinork/Biblioteca_Front.git> cd frontend
 
 Instale as Dependências Use o npm para instalar as dependências necessárias: bash npm install
 
@@ -11,7 +11,7 @@ Configuração da API No arquivo src/config.js, configure a URL base para acessa
 
 Executar o Frontend Após instalar as dependências e configurar a API, execute o frontend: bash npm start
 
-Acessar a Aplicação A aplicação estará disponível em: http://localhost:3000
+Acessar a Aplicação A aplicação estará disponível em: http://localhost:3000/
 
 Livros: Acesse http://localhost:3000/livros para ver a lista de livros.
 Usuários: Acesse http://localhost:3000/usuarios para ver a lista de usuários.
