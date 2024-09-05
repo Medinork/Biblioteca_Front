@@ -3,7 +3,7 @@ Requisitos
 Node.js 14 ou superior
 npm 6 ou superior
 Passos para Instalação
-Clone o Repositório bash git clone <URL_DO_REPOSITORIO_FRONTEND> cd frontend
+Clone o Repositório bash git clone https://github.com/Medinork/Biblioteca_Front.git cd frontend
 
 Instale as Dependências Use o npm para instalar as dependências necessárias: bash npm install
 
