@@ -1,20 +1,67 @@
-.App {
+/*General Styles*/
+
+body {
   font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-h1 {
-  color: #333;
-}
-
-ul {
-  list-style-type: none;
+  background-color: #f0f8ff;
+  margin: 0;
   padding: 0;
 }
 
-li {
-  background: #f4f4f4;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 4px;
+.App {
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  background-color: #111;
+}
+
+/*Add padding to use content is not overlapped by the menu*/
+.container {
+  padding-top: 80px;
+  /* Adjust this value if the menu height changes */
+}
+
+/* Home page styles */
+
+.MuiContainer-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 60px;
+  /* Adjust for the menu*/
+}
+
+.MuliTypography-root {
+  color: #333;
+}
+
+.MuiButton-root {
+  width: 100%;
+  max-width: 200%;
+  margin: 10px 0;
 }
