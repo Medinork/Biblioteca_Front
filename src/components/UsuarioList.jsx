@@ -1,52 +1,60 @@
+import React, { useState, useEffect } from 'react';
+import { usuariosApi } from './api'; // Importa os endpoints de usuários
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container'; // Import Container from Material-UI
+import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
 
-/**
- * Componente UsuarioList - Lista de Usuários com funcionalidade CRUD (Create, Read, Update, Delete).
- * Este componente permite adicionar, editar e remover usuários de uma lista.
- * Ele utiliza dados mockados para simular um backend, facilitando o teste.
- */
 function UsuarioList() {
-  const [usuarios, setUsuarios] = useState([
-    { id: 1, nome: 'Usuário A', email: 'usuarioa@example.com' },
-    { id: 2, nome: 'Usuário B', email: 'usuariob@example.com' },
-  ]);
-
+  const [usuarios, setUsuarios] = useState([]);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [role, setRole] = useState('');
   const [editId, setEditId] = useState(null);
 
-  // Função para salvar um novo usuário ou atualizar um existente
-  const handleSave = () => {
+  useEffect(() => {
+    // Função para buscar todos os usuários
+    const fetchUsuarios = async () => {
+      const response = await usuariosApi.getAll();
+      setUsuarios(response.data);
+    };
+
+    fetchUsuarios();
+  }, []);
+
+  const handleSave = async () => {
+    const usuario = { nome, email, senha, role };
     if (editId) {
-      setUsuarios(usuarios.map(usuario => usuario.id === editId ? { id: editId, nome, email } : usuario));
+      await usuariosApi.update(editId, usuario);
+      setUsuarios(usuarios.map(u => u.id === editId ? { id: editId, ...usuario } : u));
       setEditId(null);
     } else {
-      const newUsuario = { id: usuarios.length + 1, nome, email };
-      setUsuarios([...usuarios, newUsuario]);
+      const response = await usuariosApi.create(usuario);
+      setUsuarios([...usuarios, response.data]);
     }
     setNome('');
     setEmail('');
+    setSenha('');
+    setRole('');
   };
 
-  // Função para editar um usuário (preencher o formulário com os dados do usuário selecionado)
   const handleEdit = (usuario) => {
     setNome(usuario.nome);
     setEmail(usuario.email);
+    setSenha(usuario.senha);
+    setRole(usuario.role);
     setEditId(usuario.id);
   };
 
-  // Função para excluir um usuário da lista
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    await usuariosApi.delete(id);
     setUsuarios(usuarios.filter(usuario => usuario.id !== id));
   };
 
@@ -66,6 +74,20 @@ function UsuarioList() {
           variant="outlined"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{ marginRight: '10px' }}
+        />
+        <TextField
+          label="Senha"
+          variant="outlined"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+          style={{ marginRight: '10px' }}
+        />
+        <TextField
+          label="Role"
+          variant="outlined"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
           style={{ marginRight: '10px' }}
         />
         <Button variant="contained" color="primary" onClick={handleSave}>

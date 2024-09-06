@@ -1,52 +1,53 @@
+import React, { useState, useEffect } from 'react';
+import api from './api'; // Importa o arquivo de configuração do Axios
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container'; // Import Container from Material-UI
+import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
 
-/**
- * Componente LivroList - Lista de Livros com funcionalidade CRUD (Create, Read, Update, Delete).
- * Este componente permite adicionar, editar e remover livros de uma lista.
- * Ele utiliza dados mockados para simular um backend, facilitando o teste.
- */
 function LivroList() {
-  const [livros, setLivros] = useState([
-    { id: 1, titulo: 'Livro A', autor: 'Autor A' },
-    { id: 2, titulo: 'Livro B', autor: 'Autor B' },
-  ]);
-
+  const [livros, setLivros] = useState([]);
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [editId, setEditId] = useState(null);
 
-  // Função para salvar um novo livro ou atualizar um existente
-  const handleSave = () => {
+  useEffect(() => {
+    // Função para buscar todos os livros
+    const fetchLivros = async () => {
+      const response = await api.get('/');
+      setLivros(response.data);
+    };
+
+    fetchLivros();
+  }, []);
+
+  const handleSave = async () => {
     if (editId) {
+      await api.put(`/${editId}`, { titulo, autor });
       setLivros(livros.map(livro => livro.id === editId ? { id: editId, titulo, autor } : livro));
       setEditId(null);
     } else {
-      const newLivro = { id: livros.length + 1, titulo, autor };
-      setLivros([...livros, newLivro]);
+      const response = await api.post('/', { titulo, autor });
+      setLivros([...livros, response.data]);
     }
     setTitulo('');
     setAutor('');
   };
 
-  // Função para editar um livro (preencher o formulário com os dados do livro selecionado)
   const handleEdit = (livro) => {
     setTitulo(livro.titulo);
     setAutor(livro.autor);
     setEditId(livro.id);
   };
 
-  // Função para excluir um livro da lista
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    await api.delete(`/${id}`);
     setLivros(livros.filter(livro => livro.id !== id));
   };
 
