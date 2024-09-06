@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from './api'; // Importa o arquivo de configuração do Axios
+import api, { livrosApi } from './api'; // Importa o arquivo de configuração do Axios
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
@@ -20,8 +20,13 @@ function LivroList() {
   useEffect(() => {
     // Função para buscar todos os livros
     const fetchLivros = async () => {
-      const response = await api.get('/');
-      setLivros(response.data);
+      try{
+        const response = await livrosApi.getAll();
+        setLivros(response.data);
+      }
+      catch(erro){
+        console.error(erro)
+      }
     };
 
     fetchLivros();
@@ -29,11 +34,11 @@ function LivroList() {
 
   const handleSave = async () => {
     if (editId) {
-      await api.put(`/${editId}`, { titulo, autor });
+      await livrosApi.update(editId,{titulo,autor})
       setLivros(livros.map(livro => livro.id === editId ? { id: editId, titulo, autor } : livro));
       setEditId(null);
     } else {
-      const response = await api.post('/', { titulo, autor });
+      const response = await livrosApi.create({ titulo, autor });
       setLivros([...livros, response.data]);
     }
     setTitulo('');
@@ -47,7 +52,7 @@ function LivroList() {
   };
 
   const handleDelete = async (id) => {
-    await api.delete(`/${id}`);
+    await livrosApi.delete(id)
     setLivros(livros.filter(livro => livro.id !== id));
   };
 
