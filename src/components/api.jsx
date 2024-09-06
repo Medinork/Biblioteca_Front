@@ -11,7 +11,6 @@ export const livrosApi = {
   update: (id, livro) => api.put(`/livros/${id}`, livro),
   delete: (id) => api.delete(`/livros/${id}`),
 };
-
 export const usuariosApi = {
   getAll: () => api.get('/usuarios'),
   getById: (id) => api.get(`/usuarios/${id}`),
