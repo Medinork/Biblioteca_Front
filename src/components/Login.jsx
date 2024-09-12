@@ -1,42 +1,42 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { authApi } from "../api"; // Importando a API de login
+import { authApi } from "./api"; // Importando a API de autenticação
+import './Login.css'; // Importando o CSS para o login
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
-  const history = useHistory();
+  const history = useHistory();  // Usando o hook useHistory para navegação
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setError("");
-      
-        const loginData = {
-          email: email,
-          senha: senha,
-        };
-      
-        try {
-          const response = await authApi.login(loginData);
-      
-          if (response.status === 200) {
-            const data = response.data;
-            localStorage.setItem("token", data.token); // Armazenando o token
-            history.push("/"); // Redireciona para a página HOME após o login
-          } else {
-            setError("Email ou senha incorretos.");
-          }
-        } catch (err) {
-          setError("Erro ao conectar com o servidor.");
-        }
-      };
-      
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const loginData = {
+      email: email,
+      senha: senha,
+    };
+
+    try {
+      const response = await authApi.login(loginData);
+
+      if (response.status === 200) {
+        const data = response.data;
+        localStorage.setItem("token", data.token); // Armazenando o token no localStorage
+        history.push("/"); // Redireciona para a página principal após o login
+      } else {
+        setError("Email ou senha incorretos.");
+      }
+    } catch (err) {
+      setError("Erro ao conectar com o servidor.");
+    }
+  };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
