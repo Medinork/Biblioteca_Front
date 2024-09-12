@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import LivroList from "./components/LivroList";
 import UsuarioList from "./components/UsuarioList";
 import Home from "./components/Home";
-import Login from "./components/Login";
+
 import "./App.css";
 
 function App() {
   const isAuthenticated = localStorage.getItem("token") !== null; // Verifica se o usuário está autenticado
  
   return (
+
 <Router>
 <div className="App">
 <Switch>

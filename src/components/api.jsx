@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api', // URL base da sua API
+  baseURL: 'http://localhost:8080/api', // URL base da sua API backend
 });
 
 export const livrosApi = {
@@ -11,12 +11,17 @@ export const livrosApi = {
   update: (id, livro) => api.put(`/livros/${id}`, livro),
   delete: (id) => api.delete(`/livros/${id}`),
 };
+
 export const usuariosApi = {
   getAll: () => api.get('/usuarios'),
   getById: (id) => api.get(`/usuarios/${id}`),
   create: (usuario) => api.post('/usuarios', usuario),
-  update: (id, usuario) => api.put(`/usuarios/${id}`, usuario),
+  update: (id, usuario) => api.put(`/usuarios/${id}`),
   delete: (id) => api.delete(`/usuarios/${id}`),
+};
+
+export const authApi = {
+  login: (credentials) => api.post('/login', credentials),
 };
 
 export default api;
