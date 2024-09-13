@@ -4,6 +4,7 @@ import LivroList from "./components/LivroList";
 import UsuarioList from "./components/UsuarioList";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import Cadastro from "./components/Cadastro";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Switch>
           {/* Se não estiver autenticado, redireciona para a página de login */}
           <Route path="/login" component={Login} />
+          <Route path="/cadastro" component={Cadastro} />
           {/* Se estiver autenticado, pode acessar as demais rotas */}
           <Route
             path="/"

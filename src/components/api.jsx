@@ -15,13 +15,14 @@ export const livrosApi = {
 export const usuariosApi = {
   getAll: () => api.get('/usuarios'),
   getById: (id) => api.get(`/usuarios/${id}`),
-  create: (usuario) => api.post('/usuarios', usuario),
+  // create: (usuario) => api.post('/usuarios', usuario),
   update: (id, usuario) => api.put(`/usuarios/${id}`),
   delete: (id) => api.delete(`/usuarios/${id}`),
 };
 
 export const authApi = {
-  login: (credentials) => api.post('/login', credentials),
+  login: (credentials) => api.post('/usuarios/login', credentials),
+  registro: (credentials) => api.post('/usuarios/register', credentials),
 };
 
 export default api;
